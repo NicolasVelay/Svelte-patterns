@@ -1,14 +1,13 @@
-<script>
+<script lang="ts">
   import Button from "@smui/button";
   import LayoutGrid from "@smui/layout-grid";
   import SvelteMarkdown from "svelte-markdown";
   import ReleaseNote from "./ReleaseNote.svelte";
   import { formatDate } from "../Tools/formatDate";
 
-  let details = null;
-  $: console.log(details);
-  const onChangeDetails = (value) => (details = value);
-  const fetchReleaseNotes = (async () => {
+  let details: TReleaseNote = null;
+
+  const fetchReleaseNotes = (async (): Promise<[TReleaseNote]> => {
     const response = await fetch(
       "https://octure.flowthings.io/api/release-note",
     );
@@ -39,5 +38,5 @@
     {/each}
   {/if}
 {:catch error}
-  <div>Oopsie</div>
+  <div>{error}</div>
 {/await}
